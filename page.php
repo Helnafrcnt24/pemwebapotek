@@ -32,6 +32,32 @@ if(isset($_GET['page'])){
 		default:
 		echo "<center><h3>Maaf. Halaman tidak di temukan !</h3></center>";
 		break;
+			
+		//barang
+		case 'barang':
+		include 'modul/barang/index.php';
+		break;
+
+		case 'edit_barang':
+		include 'modul/barang/edit_barang.php';
+		break;
+
+		case 'tambah_barang':
+		include 'modul/barang/tambah_barang.php';
+		break;
+
+		//jenis
+		case 'jenis':
+		include 'modul/jenis/index.php';
+		break;
+
+		case 'edit_jenis':
+		include 'modul/jenis/edit_jenis.php';
+		break;
+
+		case 'tambah_jenis':
+		include 'modul/jenis/tambah_jenis.php';
+		break;
 	}
 }else{
 	include "home.php";
