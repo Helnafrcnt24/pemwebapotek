@@ -1,4 +1,10 @@
 <?php 
+
+if($_SESSION['id_level']=="3"){
+	echo '<script language="javascript">alert("Selain Admin Dan Operator Tidak Bisa Melakukan Aksi Ini !"); document.location="index.php?page=home";</script>';
+}
+else
+{
 	include ("config/database.php");
 	date_default_timezone_set('Asia/Jakarta');
 	$id_transaksi 	= $_GET['id_transaksi'];
@@ -29,3 +35,4 @@
 	{
 		echo "Terjadi Kesalahan";
 	}
+}

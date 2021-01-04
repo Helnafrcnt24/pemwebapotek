@@ -1,4 +1,9 @@
-<?php 
+<?php if (isset($_GET['delete'])) {
+    if($_SESSION['id_level']=="3"){
+        echo '<script language="javascript">alert("Selain Admin Dan Operator Tidak Bisa Melakukan Aksi Ini !"); document.location="index.php?page=home";</script>'; 
+    }
+    else
+    {
        $id  = $_GET['delete'];
        $id2  = $_GET['delete2'];
        $querydelete = mysqli_query($mysqli, "DELETE FROM transaksi WHERE ID_TRANSAKSI='$id' ")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));
@@ -12,6 +17,8 @@
         </button>
         </div>';
     }
+}
+}
 ?>
 <section class="statistic statistic2">
     <div class="container">
@@ -27,16 +34,22 @@
             </div>
 
             <div class="col-md-6 col-lg-3">
-                <div class="statistic__item statistic__item--orange">
-                    <h2 class="number">
-
-                </h2>
+                <?php  $query=mysqli_query($mysqli, "SELECT SUM(JUMLAH) FROM transaksi where STATUS_TRANSAKSI = 'Keluar'")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));
+            $data=mysqli_fetch_assoc($query)    
+            ?>
+                    <div class="statistic__item statistic__item--orange">
+                    <h2 class="number"><?php echo $data['SUM(JUMLAH)']; ?></h2>
+                    <h2 class="number"></h2>
                 <span class="desc">barang keluar</span>
             </div>
         </div>
 
         <div class="col-md-6 col-lg-3">
-            <div class="statistic__item statistic__item--blue">
+            <?php  $query=mysqli_query($mysqli, "SELECT SUM(JUMLAH) FROM transaksi where STATUS_TRANSAKSI = 'Masuk'")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));
+            $data=mysqli_fetch_assoc($query)    
+            ?>
+                <div class="statistic__item statistic__item--green">
+                    <h2 class="number"><?php echo $data['SUM(JUMLAH)']; ?></h2>
                 <h2 class="number"></h2>
                 <span class="desc">barang masuk</span>
             </div>
@@ -44,14 +57,14 @@
 
         <div class="col-md-6 col-lg-3">
             <?php  
-            $query=mysqli_query($mysqli, "SELECT SUM(JUMLAH) FROM barang where KONDISI = 'rusak' ")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));
+            $query=mysqli_query($mysqli, "SELECT SUM(JUMLAH) FROM transaksi where STATUS_TRANSAKSI = 'Rusak' ")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));
             while($data=mysqli_fetch_assoc($query)){    
                 ?>
                 <div class="statistic__item statistic__item--red">
                     <h2 class="number"><?php echo $data['SUM(JUMLAH)']; ?></h2>
                     <span class="desc">barang rusak</span>
                 </div>
-                <?php  ?>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -81,7 +94,7 @@
     <table class="table table-data2">
         <thead>
             <tr>
-                <th>ID</th>
+            <th>ID</th>
             <th>Tanggal Transaksi</th>
             <th>Status Transaksi</th>
             <th>Nama</th>
@@ -110,14 +123,14 @@
             <tr class="tr-shadow">
                 <td><?php echo $data['ID_TRANSAKSI']; ?></td>
                 <td><?php echo $data['TANGGAL_TRANSAKSI']; ?></td>
-                <td><strong><?php echo $data['STATUS_TRANSAKSI']; ?></strong></td>
+                <td><strong><?php echo $data['STATUS_TRANSAKSI']; ?><strong></td>
                 <td><?php echo $data['NAMA']; ?></td> 
                 <td><?php echo $data['JUMLAH']; ?></td> 
                 <td><?php echo $data['NAMA_PETUGAS']; ?></td>                                         
                 <td>
                     <a data-toggle="tooltip" data-placement="top" title="kembali" class="btn btn-warning btn-sm" href="index.php?page=kembali_transaksi&id_transaksi=<?php echo $data['ID_TRANSAKSI'] ?>&id_barang=<?php echo $data['ID_BARANG'] ?>&jumlah=<?php echo $data['JUMLAH'] ?>
                         " >
-                        <button>Update</button>
+                        <button>Kembali</button>
                     </a>
                     <a data-toggle="tooltip" data-placement="top" title="delete" class="btn btn-danger btn-sm" href="index.php?page=transaksi&delete=<?php echo $data['ID_TRANSAKSI']; ?>&delete2=<?php echo $data['ID_DETAIL_TRANSAKSI']; ?>" onclick="return confirm('apakah anda yakin untuk delete?')">
                         <i class="fas fa-trash"></i>

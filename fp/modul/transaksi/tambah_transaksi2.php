@@ -4,14 +4,6 @@
     </div>
     <div class="card-body card-block">
         <form action="" method="POST" class="form-horizontal">
-            <div class="row form-group">
-                <div class="col col-md-3">
-                    <label class=" form-control-label">Petugas</label>
-                </div>
-                <div class="col-12 col-md-9">
-                    <p class="form-control-static"><?php echo $_SESSION['nama_petugas']; ?></p>
-                </div>
-            </div>
             <?php
             date_default_timezone_set('Asia/Jakarta');
             $transaksi= date("Y-m-d h:i");
@@ -36,17 +28,33 @@
             </div>
             <div class="row form-group">
                 <div class="col col-md-3">
-                    <label for="text-input" class=" form-control-label">jenis</label>
+                    <label for="text-input" class=" form-control-label">Jenis</label>
                 </div>
                 <div class="col-12 col-md-9">
+                <select name="id_jenis" class="form-control" required="required" autofocus="autofocus">
+                    <option>Pilih Jenis</option>
+                    <?php 
+                    $query = mysqli_query($mysqli, "SELECT * FROM jenis ORDER BY NAMA_JENIS");
+                    while ($data=mysqli_fetch_assoc($query)) {
+                        ?>
+                        <option value="<?php echo $data['ID_JENIS']; ?>"><?php echo $data['NAMA_JENIS']; ?></option>
+                        <?php } ?>
+                    </select>
 
+                </div>
+                </div>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    <label for="text-input" class=" form-control-label">Barang</label>
+                </div>
+                <div class="col-12 col-md-9">
                     <select name="ID_BARANG" class="form-control" required="required" autofocus="autofocus">
                         <option>Pilih BARANG</option>
                         <?php 
-                        $query = mysqli_query($mysqli, "SELECT * FROM barang ORDER BY NAMA")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));
+                        $query = mysqli_query($mysqli, "SELECT * FROM barang ORDER BY NAMA_BARANG")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));
                         while ($data=mysqli_fetch_assoc($query)) {
                             ?>
-                            <option value="<?php echo $data['ID_BARANG']; ?>"><?php echo $data['NAMA']; ?></option>
+                            <option value="<?php echo $data['ID_BARANG']; ?>"><?php echo $data['NAMA_BARANG']; ?></option>
                             <?php } ?>
                         </select>
 
@@ -91,7 +99,7 @@ while ($data=mysqli_fetch_array($query)) {
         if ($sisa < $JUMLAH) {
             ?>
             <script type="text/javascript">
-                alert("Barang Yang Anda pinjam Melebihi Stok Atau Stok Sedang Kosong !");
+                alert("Barang Masukkan Melebihi Stok Atau Stok Sedang Kosong !");
                 window.location.href="?page=tambah_transaksi";
             </script>
             <?php
@@ -104,8 +112,8 @@ while ($data=mysqli_fetch_array($query)) {
         <?php }
         else {
             @$query=mysqli_query($mysqli, "INSERT INTO transaksi (ID_TRANSAKSI, TANGGAL_TRANSAKSI, STATUS_TRANSAKSI) VALUES ('$ID_TRANSAKSI','$TANGGAL_TRANSAKSI','Keluar')") or die (mysqli_error());
-            @$query2=mysqli_query($mysqli, "INSERT INTO detail_pinjam (ID_DETAIL_TRANSAKSI, ID_TRANSAKSI, ID_INVENTARIS, JUMLAH_DETAIL)VALUES('$ID_DETAIL_TRANSAKSI', '$ID_TRANSAKSI', '$ID_BARANG', '$JUMLAH')") or die (mysqli_error());
-            @$query3=mysqli_query($mysqli, "UPDATE inventaris SET JUMLAH=(JUMLAH-$JUMLAH) WHERE ID_BARANG='$ID_BARANG'") or die (mysqli_error());
+            @$query2=mysqli_query($mysqli, "INSERT INTO detail_transaksi (ID_DETAIL_TRANSAKSI, ID_TRANSAKSI, ID_BARANG, JUMLAH_DETAIL)VALUES('$ID_DETAIL_TRANSAKSI', '$ID_TRANSAKSI', '$ID_BARANG', '$JUMLAH')") or die (mysqli_error());
+            @$query3=mysqli_query($mysqli, "UPDATE transaksi SET JUMLAH=(JUMLAH-$JUMLAH) WHERE ID_BARANG='$ID_BARANG'") or die (mysqli_error());
             ?>
             <script type="text/javascript">
                 document.location='index.php?page=transaksi&alert=4';
