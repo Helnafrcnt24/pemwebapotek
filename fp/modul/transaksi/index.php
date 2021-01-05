@@ -1,9 +1,4 @@
 <?php if (isset($_GET['delete'])) {
-    if($_SESSION['id_level']=="3"){
-        echo '<script language="javascript">alert("Selain Admin Dan Operator Tidak Bisa Melakukan Aksi Ini !"); document.location="index.php?page=home";</script>'; 
-    }
-    else
-    {
        $id  = $_GET['delete'];
        $id2  = $_GET['delete2'];
        $querydelete = mysqli_query($mysqli, "DELETE FROM transaksi WHERE ID_TRANSAKSI='$id' ")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));
@@ -17,7 +12,9 @@
         </button>
         </div>';
     }
-}
+    else {
+        echo "gagal";
+    }
 }
 ?>
 <section class="statistic statistic2">
