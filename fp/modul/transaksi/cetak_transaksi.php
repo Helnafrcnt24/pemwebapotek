@@ -1,11 +1,14 @@
+<?php 
+include '../../session.php';
+?>
+
 <?php
-include ("config/database.php");
-header("Content-type: application/vnd.ms-word");
+header("Content-type: application/vnd.ms word");
 header("Content-type: application/octet-stream");
 header("Content-Disposition: attachment; filename=data transaksi.doc");
 header("Pragma: no-cache");
 header("Expires: 0");
-header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); //always modified
+header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
 ?>	
 
 <table align="center" border="0" cellpadding="0" cellspacing="0">
@@ -14,7 +17,6 @@ header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); //always modified
 		<tr>
 			<th>ID Transaksi</th>
 			<th>Tanggal Transaksi</th>
-			<th>ID Detail Transaksi</th>
 			<th>Status Transaksi</th>
 			<th>Nama</th>
 			<th>Jumlah</th>
@@ -38,6 +40,5 @@ header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); //always modified
 			<?php } ?>
 		</tbody>
 	</table>
-	<?php ?>
 	
 	<!-- END DATA TABLE -->
