@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 02, 2021 at 03:46 PM
+-- Generation Time: Jan 05, 2021 at 04:08 PM
 -- Server version: 10.4.14-MariaDB
--- PHP Version: 7.2.34
+-- PHP Version: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,7 +31,7 @@ CREATE TABLE `barang` (
   `ID_BARANG` int(11) NOT NULL,
   `NAMA_JENIS` varchar(30) NOT NULL,
   `NAMA_BARANG` varchar(30) NOT NULL,
-  `KONDISI` varchar(30) NOT NULL,
+  `BENTUK` varchar(30) NOT NULL,
   `KETERANGAN` varchar(30) NOT NULL,
   `JUMLAH` varchar(30) NOT NULL,
   `ID_JENIS` int(5) NOT NULL
@@ -41,8 +41,10 @@ CREATE TABLE `barang` (
 -- Dumping data for table `barang`
 --
 
-INSERT INTO `barang` (`ID_BARANG`, `NAMA_JENIS`, `NAMA_BARANG`, `KONDISI`, `KETERANGAN`, `JUMLAH`, `ID_JENIS`) VALUES
-(1, 'OBAT BATUK', 'KONIDIN', 'BAIK', '-', '30', 1);
+INSERT INTO `barang` (`ID_BARANG`, `NAMA_JENIS`, `NAMA_BARANG`, `BENTUK`, `KETERANGAN`, `JUMLAH`, `ID_JENIS`) VALUES
+(1, 'Obat Batuk', 'Konidin', 'Tablet', '-', '5', 1),
+(2, 'Obat Panas', 'Paracetamol', 'Tablet', '-', '10', 2),
+(3, 'Vitamin', 'Imboost', 'Tablet', '-', '20', 3);
 
 -- --------------------------------------------------------
 
@@ -56,6 +58,14 @@ CREATE TABLE `detail_transaksi` (
   `ID_BARANG` int(5) NOT NULL,
   `JUMLAH_DETAIL` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_transaksi`
+--
+
+INSERT INTO `detail_transaksi` (`ID_DETAIL_TRANSAKSI`, `ID_TRANSAKSI`, `ID_BARANG`, `JUMLAH_DETAIL`) VALUES
+(2, 2, 2, '10'),
+(3, 1, 3, '10');
 
 -- --------------------------------------------------------
 
@@ -74,7 +84,9 @@ CREATE TABLE `jenis` (
 --
 
 INSERT INTO `jenis` (`ID_JENIS`, `NAMA_JENIS`, `KETERANGAN`) VALUES
-(1, 'OBAT BATUK', '-');
+(1, 'Obat Batuk', '-'),
+(2, 'Obat Panas', '-'),
+(3, 'Vitamin', '-');
 
 -- --------------------------------------------------------
 
@@ -86,15 +98,16 @@ CREATE TABLE `petugas` (
   `ID_PETUGAS` int(5) NOT NULL,
   `USERNAME` varchar(30) NOT NULL,
   `PASSWORD` varchar(30) NOT NULL,
-  `NAMA_PETUGAS` varchar(30) NOT NULL
+  `NAMA_PETUGAS` varchar(30) NOT NULL,
+  `ID_LEVEL` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `petugas`
 --
 
-INSERT INTO `petugas` (`ID_PETUGAS`, `USERNAME`, `PASSWORD`, `NAMA_PETUGAS`) VALUES
-(1, 'admin', 'admin', 'admin');
+INSERT INTO `petugas` (`ID_PETUGAS`, `USERNAME`, `PASSWORD`, `NAMA_PETUGAS`, `ID_LEVEL`) VALUES
+(1, 'admin', 'admin', 'admin', 1);
 
 -- --------------------------------------------------------
 
@@ -110,6 +123,14 @@ CREATE TABLE `transaksi` (
   `JUMLAH` varchar(30) NOT NULL,
   `NAMA_PETUGAS` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `transaksi`
+--
+
+INSERT INTO `transaksi` (`ID_TRANSAKSI`, `TANGGAL_TRANSAKSI`, `STATUS_TRANSAKSI`, `NAMA`, `JUMLAH`, `NAMA_PETUGAS`) VALUES
+(1, '2021-01-05', 'Keluar', 'Vitamin Imboost', '10', 'Helna'),
+(2, '2021-01-01', 'Keluar', 'Obat Panas Paracetamol', '3', 'Taufiq');
 
 --
 -- Indexes for dumped tables
@@ -140,7 +161,8 @@ ALTER TABLE `jenis`
 -- Indexes for table `petugas`
 --
 ALTER TABLE `petugas`
-  ADD PRIMARY KEY (`ID_PETUGAS`);
+  ADD PRIMARY KEY (`ID_PETUGAS`),
+  ADD KEY `ID_LEVEL` (`ID_LEVEL`);
 
 --
 -- Indexes for table `transaksi`
