@@ -57,9 +57,24 @@
                             <option value="<?php echo $data['ID_BARANG']; ?>"><?php echo $data['NAMA_BARANG']; ?></option>
                             <?php } ?>
                         </select>
-
                     </div>
+                </div>                
+                <div class="row form-group">
+                <div class="col col-md-3">
+                    <label for="text-input" class=" form-control-label">Status Transaksi</label>
                 </div>
+                <div class="col-12 col-md-9">
+                    <select name="STATUS_TRANSAKSI" class="form-control" required="required" autofocus="autofocus">
+                        <option>Pilih Status Transaksi</option>
+                        <?php 
+                        $query = mysqli_query($mysqli, "SELECT * FROM transaksi ORDER BY STATUS_TRANSAKSI")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));
+                        while ($data=mysqli_fetch_assoc($query)) {
+                            ?>
+                            <option value="<?php echo $data['STATUS_TRANSAKSI']; ?>"><?php echo $data['STATUS_TRANSAKSI']; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>           
                 <div class="row form-group">
                     <div class="col col-md-3">
                         <label for="text-input" class=" form-control-label">Jumlah</label>
@@ -81,12 +96,13 @@ $ID_TRANSAKSI = @$_POST['ID_TRANSAKSI'];
 $TANGGAL_TRANSAKSI =@$_POST['TANGGAL_TRANSAKSI'];
 $ID_BARANG = @$_POST['ID_BARANG'];
 $JUMLAH = @$_POST['JUMLAH'];
+$STATUS_TRANSAKSI = @$_POST['STATUS_TRANSAKSI'];
 $tambah_transaksi = @$_POST['tambah'];
 
 $id_barang = @$_POST['ID_BARANG'];
 $query=mysqli_query($mysqli, "SELECT * FROM barang WHERE ID_BARANG='$ID_BARANG'")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));
 while ($data=mysqli_fetch_array($query)) {
-    $kondisi =$data['KONDISI'];
+    $bentuk =$data['BENTUK'];
     $sisa=$data['JUMLAH'];
     if($tambah_transaksi){
         if($ID_TRANSAKSI == ""){
@@ -104,15 +120,15 @@ while ($data=mysqli_fetch_array($query)) {
             </script>
             <?php
         }
-        elseif ($kondisi == "rusak") { ?>
+        elseif ($bentuk == "rusak") { ?>
         <script type="text/javascript">
             alert("Barang Yang Anda Pinjam Sedang Rusak !");
             window.location.href="?page=tambah_transaksi";
         </script>
         <?php }
         else {
-            @$query=mysqli_query($mysqli, "INSERT INTO transaksi (ID_TRANSAKSI, TANGGAL_TRANSAKSI, STATUS_TRANSAKSI) VALUES ('$ID_TRANSAKSI','$TANGGAL_TRANSAKSI','Keluar')") or die (mysqli_error());
-            @$query2=mysqli_query($mysqli, "INSERT INTO detail_transaksi (ID_DETAIL_TRANSAKSI, ID_TRANSAKSI, ID_BARANG, JUMLAH_DETAIL)VALUES('$ID_DETAIL_TRANSAKSI', '$ID_TRANSAKSI', '$ID_BARANG', '$JUMLAH')") or die (mysqli_error());
+            @$query=mysqli_query($mysqli, "INSERT INTO transaksi (ID_TRANSAKSI, TANGGAL_TRANSAKSI, STATUS_TRANSAKSI, JUMLAH, NAMA_PETUGAS) VALUES ('$ID_TRANSAKSI','$TANGGAL_TRANSAKSI','$STATUS_TRANSAKSI', '$JUMLAH', '$NAMA_PETUGAS')") or die (mysqli_error());
+            @$query2=mysqli_query($mysqli, "INSERT INTO detail_transaksi (ID_DETAIL_TRANSAKSI, ID_TRANSAKSI, ID_BARANG, JUMLAH_DETAIL)VALUES('$ID_DETAIL_TRANSAKSI', '$ID_TRANSAKSI', '$ID_BARANG', '$JUMLAH_DETAIL')") or die (mysqli_error());
             @$query3=mysqli_query($mysqli, "UPDATE transaksi SET JUMLAH=(JUMLAH-$JUMLAH) WHERE ID_BARANG='$ID_BARANG'") or die (mysqli_error());
             ?>
             <script type="text/javascript">
