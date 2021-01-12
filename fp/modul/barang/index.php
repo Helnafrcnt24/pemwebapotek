@@ -47,7 +47,7 @@
                 if(isset($_POST['pencarian']))
                 {
                     $cari = $_POST['cari'];
-                    $query = mysqli_query($mysqli, "SELECT * FROM barang where NAMA_JENIS like '%$cari%' OR ID_BARANG like '%$cari%' ")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));
+                    $query = mysqli_query($mysqli, "SELECT * FROM barang where NAMA_BARANG like '%$cari%' OR ID_BARANG like '%$cari%' ")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));
                 }
                 else{
                     $query = mysqli_query($mysqli, "SELECT * FROM barang ORDER BY ID_BARANG DESC")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));  
