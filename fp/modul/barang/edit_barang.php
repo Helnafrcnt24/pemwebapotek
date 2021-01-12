@@ -4,15 +4,15 @@
       $id = $_GET['edit']; 
       $nama_jenis= $_POST['nama_jenis'];
       $nama_barang= $_POST['nama_barang'];
-      $kondisi = $_POST['kondisi'];
+      $bentuk = $_POST['bentuk'];
       $keterangan = $_POST['keterangan'];
       $jumlah = $_POST['jumlah'];
       $id_jenis = $_POST['id_jenis'];
-      $query = mysqli_query($mysqli, "UPDATE barang set ID_JENIS='$id_jenis', NAMA_JENIS='$nama_jenis', NAMA_BARANG='$nama_barang', KONDISI='$kondisi', KETERANGAN='$keterangan', JUMLAH='$jumlah' where ID_BARANG= '$id' ")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));
+      $query = mysqli_query($mysqli, "UPDATE barang set ID_JENIS='$id_jenis', NAMA_JENIS='$nama_jenis', NAMA_BARANG='$nama_barang', BENTUK='$bentuk', KETERANGAN='$keterangan', JUMLAH='$jumlah' where ID_BARANG= '$id' ")or die('Ada kesalahan pada query insert: '.mysqli_error($mysqli));
 
       if ($query) { ?>
       <script language="JavaScript">
-        document.location='index.php?page=inventaris&alert=5';
+        document.location='index.php?page=barang&alert=5';
     </script>
     <?php }} ?>
 
@@ -67,12 +67,12 @@
                         <label for="text-input" class=" form-control-label">ID Barang</label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input type="number" name="id_inventaris" value="<?php echo $data['ID_BARANG']; ?>" class="form-control" required>
+                        <input type="number" name="id_barang" value="<?php echo $data['ID_BARANG']; ?>" class="form-control" required>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-3">
-                        <label for="text-input" class=" form-control-label">Nama</label>
+                        <label for="text-input" class=" form-control-label">Nama Barang</label>
                     </div>
                     <div class="col-12 col-md-9">
                         <input type="text" name="nama" value="<?php echo $data['NAMA_BARANG']; ?>" class="form-control" required>
@@ -83,7 +83,7 @@
                         <label for="text-input" class=" form-control-label">Bentuk</label> 
                     </div>
                     <div class="col-12 col-md-9">
-                    <input type="text" name="nama" value="<?php echo $data['BENTUK']; ?>" class="form-control" required>
+                    <input type="text" name="bentuk" value="<?php echo $data['BENTUK']; ?>" class="form-control" required>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -105,7 +105,7 @@
 
             <div class="card-footer">
                 <button class="btn btn-primary" type="submit" name="edit_simpan">Edit</button>
-                <a href="../inventaris/index.php?page=inventaris" class="btn btn-danger">Cancel</a>
+                <a href="../barang/index.php?page=barang" class="btn btn-danger">Cancel</a>
             </div>
         </form>
         <?php }} ?>
