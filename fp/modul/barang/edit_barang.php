@@ -75,23 +75,15 @@
                         <label for="text-input" class=" form-control-label">Nama</label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input type="text" name="nama" value="<?php echo $data['NAMA']; ?>" class="form-control" required>
+                        <input type="text" name="nama" value="<?php echo $data['NAMA_BARANG']; ?>" class="form-control" required>
                     </div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-3">
-                        <label for="text-input" class=" form-control-label">Kondisi</label>
+                        <label for="text-input" class=" form-control-label">Bentuk</label> 
                     </div>
                     <div class="col-12 col-md-9">
-                        <select name="kondisi" class="form-control" required="required" autofocus="autofocus">
-                            <option selected="<?php echo $data['KONDISI']; ?>"><?php echo $data['KONDISI']; ?></option>
-                            <?php if ($data['KONDISI'] == 'baik') { ?>
-                            <option value="rusak">rusak</option>
-                            <?php } else{ ?>
-                            <option value="baik">baik</option>
-                            <?php } ?>
-                        </select>
-
+                    <input type="text" name="nama" value="<?php echo $data['BENTUK']; ?>" class="form-control" required>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -99,7 +91,7 @@
                         <label for="textarea-input" class="form-control-label">Keterangan</label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <textarea name="keterangan" rows="5" placeholder="Keterangan..." class="form-control" required><?php echo $data['KETERANGAN_INVENTARIS']; ?></textarea>
+                        <textarea name="keterangan" rows="5" placeholder="Keterangan..." class="form-control" required><?php echo $data['KETERANGAN']; ?></textarea>
                     </div>
                 </div>
                 <div class="row form-group">
